@@ -49,6 +49,6 @@ docker run --name hello-nginx -v C:\Users\shiiw\デスクトップ\オーリス�
 例としてhello.htmlがディレクトリに入っていた場合、http://localhost:8080/hello.htmlにアクセスすればWebサイトが表示。
 
 
-docker-compose.ymlの更新を反映させる
+docker-compose.ymlの更新を反映、ビルドさせる
 docker-compose up -d
 
