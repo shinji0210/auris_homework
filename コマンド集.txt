@@ -1,0 +1,54 @@
+
+ローカルリポジトリを作成
+$ git init 絶対パス
+git init C:/Users/shiiw/デスクトップ/オーリス課題/テスト
+
+
+ブランチを設定
+git checkout 任意のブランチ名
+
+github先に接続
+shinji0210:ユーザー名
+auris_homework:リモートリポジトリ名
+git remote add origin https://github.com/shinji0210/auris_homework.git      
+
+リポジトリをコピー
+$ git clone [コピーするリポジトリ] [コピー先ディレクトリ(省略可)]
+git clone C:/Users/shiiw/デスクトップ/オーリス課題/テスト C:/Users/shiiw/デスクトップ/オーリス課題/テスト2
+
+コミット時にコメント記載を忘れない。
+
+
+vscode
+ターミナル(コンソール入力)：ctrl+shift+@
+
+
+
+コンテナの作成＆起動
+docker run --name nginx-latest -d -p 8080:80 nginx:latest
+
+docker runコマンドでNginxを起動したので、ブラウザを開いて「http://localhost:8080」にアクセスして確認。
+
+NginXのコンテナを停止。
+// docker stop [コンテナ名]
+$ docker stop nginx-latest
+
+コンテナの削除
+// docker rm [コンテナ名]
+$ docker rm nginx-latest
+強制的に削除
+$ docker rm --force (対象コンテナID)
+
+全てのコンテナのIDを表示
+docker ps -a
+
+
+ホスト側でHTMLを設置したディレクトリとコンテナ側のディレクトリにバインドしてEnginxを起動
+docker run --name hello-nginx -v C:\Users\shiiw\デスクトップ\オーリス課題\template-docker-laravel-main\MyProfile:/usr/share/nginx/php:ro -d -p 8080:80 nginx
+
+例としてhello.htmlがディレクトリに入っていた場合、http://localhost:8080/hello.htmlにアクセスすればWebサイトが表示。
+
+
+docker-compose.ymlの更新を反映させる
+docker-compose up -d
+
