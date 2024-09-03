@@ -4,6 +4,7 @@ $ git init 絶対パス
 git init C:/Users/shiiw/デスクトップ/オーリス課題/テスト
 
 
+
 ブランチを設定
 git checkout 任意のブランチ名
 
@@ -21,11 +22,6 @@ git clone C:/Users/shiiw/デスクトップ/オーリス課題/テスト C:/User
 
 vscode
 ターミナル(コンソール入力)：ctrl+shift+@
-
-
-
-コンテナの作成＆起動
-docker run --name nginx-latest -d -p 8080:80 nginx:latest
 
 docker runコマンドでNginxを起動したので、ブラウザを開いて「http://localhost:8080」にアクセスして確認。
 
@@ -52,3 +48,37 @@ docker run --name hello-nginx -v C:\Users\shiiw\デスクトップ\オーリス�
 docker-compose.ymlの更新を反映、ビルドさせる
 docker-compose up -d
 
+
+
+
+コンテナの表示
+make ps
+app、db、phpmyadmin、webが起動されているか確認。
+phpmyadminのポート番号でlocalhost:○○をchromeにペースト
+
+
+DBのログを表示
+make log-db
+
+コンテナを立ち上げる
+make up
+
+phpMyAdminに接続
+make migrate
+
+//コンテナのビルド、破棄
+make bulid
+make destroy
+
+//php artisan～のコマンドを実行したい場合はまずこのコマンドを実行
+make app
+
+//戻るときコマンド
+ctrl+D
+
+
+指定したフォルダへ進む
+cd backend
+
+一つ前のディレクトリに移動
+cd ../
