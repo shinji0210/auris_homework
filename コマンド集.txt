@@ -66,6 +66,8 @@ make up
 phpMyAdminに接続
 make migrate
 
+マイグレーション：既存システムやソフトウェア、データなどを別の環境に移転したり、新しい環境に移行することを意味する。
+
 //コンテナのビルド、破棄
 make bulid
 make destroy
@@ -82,3 +84,19 @@ cd backend
 
 一つ前のディレクトリに移動
 cd ../
+
+Tailwind CSSを入れるときはbackend下で行う。
+
+backend下でサーバーを立ち上げ
+php artisan serve
+
+TodoListSeederのダミー、もしくは初期データ登録
+php artisan db:seed --class=TodoListSeeder
+
+現在あるルーティング情報が一覧で表示
+php artisan route:list
+
+例：POST   tasks .... tasks.store › TaskController@store
+POSTにアクセスがあったら、TaskControllerのstoreを実行する
+
+
