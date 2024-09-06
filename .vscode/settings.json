@@ -1,0 +1,10 @@
+{
+  "search.useGlobalIgnoreFiles": false,
+  "search.useParentIgnoreFiles": false,
+  "search.useIgnoreFiles": false,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/**/node_modules": true,
+    "**/vendor": true,
+  }
+}
