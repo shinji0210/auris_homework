@@ -1,2 +1,4 @@
 .env
+backend/node_modules/.vite
 phpmyadmin/sessions/
+backend/storage/logs/laravel.log
