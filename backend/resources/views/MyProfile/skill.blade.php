@@ -24,6 +24,36 @@
             </div>
         </div>
     </header>
+
+
+    <!-- 自己紹介へ向かう用のボタン -->
+    <a href="{{ route('self_introduction') }}" class="relative mt-0 ml-auto block w-40 h-14 text-white flex items-center text-2xl font-semibold bg-sky-700
+        border-2 border-green-200 transition-all duration-300 
+        hover:bg-yellow-500 hover:border-black">
+        　自己紹介
+    </a>
+
+    <!-- 経歴へ向かう用のボタン -->
+    <a href="{{ route('career') }}" class="relative mt-0 ml-auto block w-40 h-14 text-white flex items-center text-2xl font-semibold bg-sky-700
+        border-2 border-green-200 transition-all duration-300 
+        hover:bg-yellow-500 hover:border-black">
+        　経歴
+    </a>
+
+    <!-- やりたいことへ向かう用のボタン -->
+    <a href="{{ route('want_to_do') }}" class="relative mt-0 ml-auto block w-40 h-14 text-white flex items-center text-2xl font-semibold bg-sky-700
+        border-2 border-green-200 transition-all duration-300 
+        hover:bg-yellow-500 hover:border-black">
+        　やりたいこと
+    </a>
+
+    <!-- 特技へ向かう用のボタン -->
+    <a href="{{ route('skill') }}" class="relative mt-0 ml-auto block w-40 h-14 text-white flex items-center text-2xl font-semibold bg-sky-700
+        border-2 border-green-200 transition-all duration-300 
+        hover:bg-yellow-500 hover:border-black">
+        　特技
+    </a>
+    
 </body>
 
 </html>
