@@ -7,7 +7,12 @@ export default {
     "./resources/**/*.vue",
   ],
   theme: {
-    extend: {},
+    extend: {
+      //使えるフォントの設定
+      fontFamily: {
+        mochiy: ['Mochiy Pop One', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 }
