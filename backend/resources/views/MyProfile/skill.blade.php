@@ -16,7 +16,7 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="flex flex-col min-h-[100vh]">
+<body class="flex flex-col min-h-[100vh] bg-blue-100">
     <header class="bg-gradient-to-r from-blue-500 to-cyan-500">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="py-6">
@@ -26,33 +26,65 @@
     </header>
 
 
-    <!-- 自己紹介へ向かう用のボタン -->
-    <a href="{{ route('self_introduction') }}" class="relative mt-0 ml-auto block w-40 h-14 text-white flex items-center text-2xl font-semibold bg-sky-700
-        border-2 border-green-200 transition-all duration-300 
-        hover:bg-yellow-500 hover:border-black">
-        　自己紹介
-    </a>
+    <div class="flex justify-between items-start p-4 ">
+    <!-- 左側の説明部分 -->
+        <div class="text-left text-gray-700 text-lg">
+            <p>
+                <span class="font-bold">そろばん：</span>小学3年生から専門学生2年までそろばん教室に通学。珠算検定参段取得。
+            </p>
+            <p>
+                <span class="font-bold">動画編集：</span>何か自分の趣味を作りたいと思い、始めたのがきっかけ。
+            </p>
+            
 
-    <!-- 経歴へ向かう用のボタン -->
-    <a href="{{ route('career') }}" class="relative mt-0 ml-auto block w-40 h-14 text-white flex items-center text-2xl font-semibold bg-sky-700
-        border-2 border-green-200 transition-all duration-300 
-        hover:bg-yellow-500 hover:border-black">
-        　経歴
-    </a>
 
-    <!-- やりたいことへ向かう用のボタン -->
-    <a href="{{ route('want_to_do') }}" class="relative mt-0 ml-auto block w-40 h-14 text-white flex items-center text-2xl font-semibold bg-sky-700
-        border-2 border-green-200 transition-all duration-300 
-        hover:bg-yellow-500 hover:border-black">
-        　やりたいこと
-    </a>
+            <!-- "ホームに戻る" リンク -->
+            <div class="mt-20">
+                <a href="{{ route('index') }}" class="inline-block px-6 py-1 bg-blue-600 text-white text-lg font-semibold rounded-md hover:bg-blue-700">
+                    ホームに戻る
+                </a>
+            </div>
+        </div>
 
-    <!-- 特技へ向かう用のボタン -->
-    <a href="{{ route('skill') }}" class="relative mt-0 ml-auto block w-40 h-14 text-white flex items-center text-2xl font-semibold bg-sky-700
-        border-2 border-green-200 transition-all duration-300 
-        hover:bg-yellow-500 hover:border-black">
-        　特技
-    </a>
+        <div class="flex flex-col space-y-0">
+
+            <!-- 自己紹介へ向かう用のボタン -->
+            <a href="{{ route('self_introduction') }}" class="relative mt-0 ml-auto block w-40 h-14 text-white flex items-center text-2xl font-semibold bg-sky-700
+                border-2 border-green-200 transition-all duration-300 
+                hover:bg-yellow-500 hover:border-black">
+                　自己紹介
+            </a>
+
+            <!-- 経歴へ向かう用のボタン -->
+            <a href="{{ route('career') }}" class="relative mt-0 ml-auto block w-40 h-14 text-white flex items-center text-2xl font-semibold bg-sky-700
+                border-2 border-green-200 transition-all duration-300 
+                hover:bg-yellow-500 hover:border-black">
+                　経歴
+            </a>
+
+            <!-- やりたいことへ向かう用のボタン -->
+            <a href="{{ route('want_to_do') }}" class="relative mt-0 ml-auto block w-40 h-14 text-white flex items-center text-2xl font-semibold bg-sky-700
+                border-2 border-green-200 transition-all duration-300 
+                hover:bg-yellow-500 hover:border-black">
+                　やりたいこと
+            </a>
+
+            <!-- 特技へ向かう用のボタン -->
+            <a href="{{ route('skill') }}" class="relative mt-0 ml-auto block w-40 h-14 text-white flex items-center text-2xl font-semibold bg-sky-700
+                border-2 border-green-200 transition-all duration-300 
+                hover:bg-yellow-500 hover:border-black">
+                　特技
+            </a>
+
+
+        </div>
+    </div>
+
+    <footer class="bg-gray-600 text-white p-2 mt-auto">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 My Website. All rights reserved.</p>
+        </div>
+    </footer>
     
 </body>
 

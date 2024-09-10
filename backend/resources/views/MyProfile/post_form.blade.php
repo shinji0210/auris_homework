@@ -16,7 +16,7 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="flex flex-col min-h-[100vh]">
+<body class="flex flex-col min-h-[100vh] bg-orange-100">
     <header class="bg-gradient-to-r from-blue-500 to-cyan-500">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="py-6">
@@ -24,6 +24,17 @@
             </div>
         </div>
     </header>
+
+    <p class="mt-4">
+        自己紹介ページのホームに載せる投稿を作成できます。
+    </p>
+    <p>
+        名前、投稿内容は必須入力です。
+    </p>
+    <p>
+        誹謗中傷に当たるような内容はご遠慮ください。
+    </p>
+
 </body>
 
 </html>

@@ -27,45 +27,79 @@
         </div>
     </header>
 
+    <div class="flex justify-between items-start p-4 bg-gray-100">
+    <!-- 左側の説明部分 -->
+        <div class="text-left text-gray-700 text-lg">
+            <h1 class="text-2xl font-bold text-black mb-4">
+                shinjiの自己紹介ページへようこそ！
+            </h1>
+            <p>
+                右のタブから各ページに移れます。何かあれば下記のコメントにてお願いします！
+            </p>
+            <h2 class="text-xl font-bold text-black mt-10 mb-4">
+                コメントについて
+            </h2 class="relative mt-4">
+            <p>
+                コメントを送る際にタグをつけて送ることができます。タグをつけることにより投稿が検索しやすくなります。
+            </p>
+        </div>
 
+        <div class="flex flex-col space-y-0">
 
-    <!-- 自己紹介へ向かう用のボタン -->
-    <a href="{{ route('self_introduction') }}" class="relative mt-0 ml-auto block w-40 h-14 text-white flex items-center text-2xl font-semibold bg-sky-700
-        border-2 border-green-200 transition-all duration-300 
-        hover:bg-yellow-500 hover:border-black">
-        　自己紹介
-    </a>
+            <!-- 自己紹介へ向かう用のボタン -->
+            <a href="{{ route('self_introduction') }}" class="relative mt-0 ml-auto block w-40 h-14 text-white flex items-center text-2xl font-semibold bg-sky-700
+                border-2 border-green-200 transition-all duration-300 
+                hover:bg-yellow-500 hover:border-black">
+                　自己紹介
+            </a>
 
-    <!-- 経歴へ向かう用のボタン -->
-    <a href="{{ route('career') }}" class="relative mt-0 ml-auto block w-40 h-14 text-white flex items-center text-2xl font-semibold bg-sky-700
-        border-2 border-green-200 transition-all duration-300 
-        hover:bg-yellow-500 hover:border-black">
-        　経歴
-    </a>
+            <!-- 経歴へ向かう用のボタン -->
+            <a href="{{ route('career') }}" class="relative mt-0 ml-auto block w-40 h-14 text-white flex items-center text-2xl font-semibold bg-sky-700
+                border-2 border-green-200 transition-all duration-300 
+                hover:bg-yellow-500 hover:border-black">
+                　経歴
+            </a>
 
-    <!-- やりたいことへ向かう用のボタン -->
-    <a href="{{ route('want_to_do') }}" class="relative mt-0 ml-auto block w-40 h-14 text-white flex items-center text-2xl font-semibold bg-sky-700
-        border-2 border-green-200 transition-all duration-300 
-        hover:bg-yellow-500 hover:border-black">
-        　やりたいこと
-    </a>
+            <!-- やりたいことへ向かう用のボタン -->
+            <a href="{{ route('want_to_do') }}" class="relative mt-0 ml-auto block w-40 h-14 text-white flex items-center text-2xl font-semibold bg-sky-700
+                border-2 border-green-200 transition-all duration-300 
+                hover:bg-yellow-500 hover:border-black">
+                　やりたいこと
+            </a>
 
-    <!-- 特技へ向かう用のボタン -->
-    <a href="{{ route('skill') }}" class="relative mt-0 ml-auto block w-40 h-14 text-white flex items-center text-2xl font-semibold bg-sky-700
-        border-2 border-green-200 transition-all duration-300 
-        hover:bg-yellow-500 hover:border-black">
-        　特技
-    </a>
+            <!-- 特技へ向かう用のボタン -->
+            <a href="{{ route('skill') }}" class="relative mt-0 ml-auto block w-40 h-14 text-white flex items-center text-2xl font-semibold bg-sky-700
+                border-2 border-green-200 transition-all duration-300 
+                hover:bg-yellow-500 hover:border-black">
+                　特技
+            </a>
 
-    <!-- 投稿管理画面へ向かう用のボタン -->
-    <!-- クリックするとパスワード入力ポップアップを開くopenPasswordModalを実行 -->
-    <button onclick="openPasswordModal()" class="relative mt-0 ml-auto block w-20 h-8 text-black flex items-center text-xl font-semibold bg-slate-300
-        border-2 border-black transition-all duration-300 
-        hover:bg-slate-400 hover:border-black">
-        管理
-    </button>
+            <!-- 投稿管理画面へ向かう用のボタン -->
+            <!-- クリックするとパスワード入力ポップアップを開くopenPasswordModalを実行 -->
+            <button onclick="openPasswordModal()" class="relative mt-0 ml-auto block w-20 h-8 text-black flex items-center text-xl font-semibold bg-slate-300
+                border-2 border-black transition-all duration-300 
+                hover:bg-slate-400 hover:border-black">
+                管理
+            </button>
 
+        </div>
+    </div>
 
+    <div class="flex justify-between items-start p-4 bg-orange-200">
+
+        <a href="{{ route('post_form') }}" class="inline-block px-3 py-1 bg-orange-600 text-white text-lg font-semibold rounded-md hover:bg-orange-800">
+            投稿
+        </a>
+    </div>
+    
+
+    
+
+    <footer class="bg-gray-600 text-white p-2 mt-auto">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 My Website. All rights reserved.</p>
+        </div>
+    </footer>
 
     <!-- パスワード入力ポップアップモーダル -->
     <!-- fixed:スクロールしても常に画面に表示される -->

@@ -36,6 +36,9 @@ Route::resource('tasks', TaskController::class);
 
 //自己紹介ページ用
 Route::get('MyProfile', [MyProfileController::class, 'index']);
+Route::get('MyProfile', function () {
+    return view('MyProfile.index');
+})->name('index');
 Route::get('MyProfile/self_introduction', function () {
     return view('MyProfile.self_introduction');
 })->name('self_introduction');
@@ -48,8 +51,11 @@ Route::get('MyProfile/want_to_do', function () {
 Route::get('MyProfile/skill', function () {
     return view('MyProfile.skill');
 })->name('skill');
+Route::get('MyProfile/post_form', function () {
+    return view('MyProfile.post_form');
+})->name('post_form');
 
-Route::get('MyProfile/post_form', [MyProfileController::class, 'post_form']);
+
 
 //index.blade.phpからcheck_password ルートに送信されたパスワードを受け取る
 //correctPasswordの値と一致するか検証。
