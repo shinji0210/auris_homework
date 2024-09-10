@@ -30,21 +30,11 @@
     <!-- 左側の説明部分 -->
         <div class="text-left text-gray-700 text-lg">
             <p>
-                <span class="font-bold">生年月日：</span>平成11年 2月10日生まれ
-            </p>
-            <p>
-                <span class="font-bold">出身地：</span>岡山
-            </p>
-            <p>
-                <span class="font-bold">学生時代の部活：</span>中学は美術部、高校は囲碁将棋部
-            </p>
-            <p>
-                <span class="font-bold">趣味：</span>ゲーム、動画編集
-            </p>
-            <p>
-                <span class="font-bold">現在プレイしてるゲーム(ソーシャルゲーム)：</span>原神, 崩壊スターレイル, ゼンレスゾーンゼロ, ブルーアーカイブ, FGO, モンスターストライク
-            </p>
-            <p>
+                <span class="font-bold">生年月日：</span>平成11年 2月10日生まれ<br>
+                <span class="font-bold">出身地：</span>岡山<br>
+                <span class="font-bold">学生時代の部活：</span>中学は美術部、高校は囲碁将棋部<br>
+                <span class="font-bold">趣味：</span>ゲーム、動画編集<br>
+                <span class="font-bold">現在プレイしてるゲーム(ソーシャルゲーム)：</span>原神, 崩壊スターレイル, ゼンレスゾーンゼロ, ブルーアーカイブ, FGO, モンスターストライク<br>
                 <span class="font-bold">現在プレイしてるゲーム(その他)：</span>モンスターハンターワールドアイスボーンPC版(来年Wildsが発売されるので復習がてらプレイ)
             </p>
 

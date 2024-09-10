@@ -30,31 +30,15 @@
     <!-- 左側の説明部分 -->
         <div class="text-left text-gray-700 text-lg">
             <p>
-                <span class="font-bold">平成27年 3月：</span>岡山県立岡北中学校卒業
-            </p>
-            <p>
-                <span class="font-bold">平成27年 4月：</span>岡山県立岡山一宮高等学校 理数科入学
-            </p>
-            <p>
-                <span class="font-bold">平成30年 3月：</span>岡山県立岡山一宮高等学校 理数科卒業
-            </p>
-            <p>
-                <span class="font-bold">平成30年 4月：</span>岡山私立岡山理科大学 情報科学科入学
-            </p>
-            <p>
-                <span class="font-bold">令和3年 3月：</span>岡山私立岡山理科大学 情報科学科卒業
-            </p>
-            <p>
-                <span class="font-bold">令和3年 4月：</span>専門学校岡山情報ビジネス学院 情報システム学科入学 
-            </p>
-            <p>
-                <span class="font-bold">令和5年 3月：</span>専門学校岡山情報ビジネス学院 情報システム学科卒業
-            </p>
-            <p>
-                <span class="font-bold">令和5年 4月：</span>株式会社ユーコム入社 
-            </p>
-            <p>
-                <span class="font-bold">令和6年 7月：</span>一身上の都合により株式会社ユーコム退社 
+                <span class="font-bold">平成27年 3月：</span>岡山県立岡北中学校卒業<br>
+                <span class="font-bold">平成27年 4月：</span>岡山県立岡山一宮高等学校 理数科入学<br>
+                <span class="font-bold">平成30年 3月：</span>岡山県立岡山一宮高等学校 理数科卒業<br>
+                <span class="font-bold">平成30年 4月：</span>岡山私立岡山理科大学 情報科学科入学<br>
+                <span class="font-bold">令和3年 3月：</span>岡山私立岡山理科大学 情報科学科卒業<br>
+                <span class="font-bold">令和3年 4月：</span>専門学校岡山情報ビジネス学院 情報システム学科入学<br>
+                <span class="font-bold">令和5年 3月：</span>専門学校岡山情報ビジネス学院 情報システム学科卒業<br>
+                <span class="font-bold">令和5年 4月：</span>株式会社ユーコム入社<br>
+                <span class="font-bold">令和6年 7月：</span>一身上の都合により株式会社ユーコム退社<br>
             </p>
             <p class="mt-5">
                 現在に至る 

@@ -30,12 +30,9 @@
     <!-- 左側の説明部分 -->
         <div class="text-left text-gray-700 text-lg">
             <p>
-                <span class="font-bold">そろばん：</span>小学3年生から専門学生2年までそろばん教室に通学。珠算検定参段取得。
+                <span class="font-bold">そろばん：</span>小学3年生から専門学生2年までそろばん教室に通学。珠算検定参段取得済。<br>
+                <span class="font-bold">動画編集：</span>何か自分の趣味を作りたいと思い、始めたのがきっかけ。<br>
             </p>
-            <p>
-                <span class="font-bold">動画編集：</span>何か自分の趣味を作りたいと思い、始めたのがきっかけ。
-            </p>
-            
 
 
             <!-- "ホームに戻る" リンク -->

@@ -30,18 +30,11 @@
     <!-- 左側の説明部分 -->
         <div class="text-left text-gray-700 text-lg">
             <p>
-                <span class="font-bold">SEとして：</span>顧客に満足してもらえるようなプログラミングをしていきたい。
+                <span class="font-bold">SEとして：</span>顧客に満足してもらえるようなプログラミングをしていきたい。<br>
+                Webサイトのプログラミングが行えるよう、html、phpの知識を習熟していきたい。<br>
+                <span class="font-bold">ゲーム：</span>来年発売されるモンスターハンターワイルズをやりこみたい。<br>
+                <span class="font-bold">趣味：</span>今後もコンスタントに動画編集、投稿を続けていきたい。<br>
             </p>
-            <p>
-                Webサイトのプログラミングが行えるよう、html、phpの知識を習熟していきたい。
-            </p>
-            <p>
-                <span class="font-bold">ゲーム：</span>来年発売されるモンスターハンターワイルズをやりこみたい。
-            </p>
-            <p>
-                <span class="font-bold">趣味：</span>今後もコンスタントに動画編集、投稿を続けていきたい。
-            </p>
-            
 
 
             <!-- "ホームに戻る" リンク -->
