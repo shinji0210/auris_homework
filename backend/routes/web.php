@@ -55,7 +55,8 @@ Route::get('MyProfile/post_form', function () {
     return view('MyProfile.post_form');
 })->name('post_form');
 
-
+// 投稿データを保存するルート
+Route::post('post', [MyProfileController::class, 'store']);
 
 //index.blade.phpからcheck_password ルートに送信されたパスワードを受け取る
 //correctPasswordの値と一致するか検証。

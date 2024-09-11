@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\MyProfile;
+use App\Http\Requests\MyProfilePostValidate;
+use Illuminate\Support\Facades\DB;
 
 class MyProfileController extends Controller
 {
@@ -47,12 +50,53 @@ class MyProfileController extends Controller
         return view('MyProfile.skill');
     }
 
+
+    
+
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        //データの検証
+        //問題なければvalidatedに格納される。
+        $validated = $request->validate([
+            'name' => 'required|max:40',
+            'content' => 'required|max:200',
+        ],
+        [
+            'name.required' => '※名前を入力してください。',
+            'content.required' => '※投稿内容を入力してください。'
+        ]);
+
+        // post_noの生成（最大値取得 + 1）
+        $maxPostNo = DB::table('myprofile_posts')->max('post_no');
+        $postNo = $maxPostNo ? $maxPostNo + 1 : 1;
+
+        // データベースに登録
+        DB::table('myprofile_posts')->insert([
+            'post_no' => $postNo,
+            'name' => $request->input('name'),
+            'post_content' => $request->input('content'),
+            'tag_01' => $request->input('tag_01') ?? null,
+            'tag_02' => $request->input('tag_02') ?? null,
+            'tag_03' => $request->input('tag_03') ?? null,
+            'tag_04' => $request->input('tag_04') ?? null,
+            'tag_05' => $request->input('tag_05') ?? null,
+            'tag_06' => $request->input('tag_06') ?? null,
+            'tag_07' => $request->input('tag_07') ?? null,
+            'tag_08' => $request->input('tag_08') ?? null,
+            'tag_09' => $request->input('tag_09') ?? null,
+            'tag_10' => $request->input('tag_10') ?? null,
+            'status' => false, // 初期状態はfalse
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+
+        // 「投稿しました」メッセージをセッションに追加
+        return redirect()->route('post_form')->with('message', '投稿しました。');
     }
 
     /**
