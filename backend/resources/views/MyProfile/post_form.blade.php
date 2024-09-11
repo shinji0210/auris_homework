@@ -108,21 +108,25 @@
             </div>
             <!-- スクリプト -->
             <script>
+                //ユーザーがホームに戻るリンクをクリックすると、処理が実行
                 document.getElementById('home-link').addEventListener('click', function(event) {
-                    // フォームの各入力フィールドを取得
+                    //フォームの各入力フィールドを取得
                     let name = document.getElementById('name').value;
                     let content = document.getElementById('content').value;
-                    let tags = document.querySelectorAll('#tags-container input'); // タグは複数ある可能性があるので配列で取得
+                    //tags-container内の全てのinputタグを配列で取得
+                    let tags = document.querySelectorAll('#tags-container input');
 
-                    // 1つでも入力があれば確認ダイアログを表示
+                    //1つでも入力があれば確認ダイアログを表示
+                    //Array.from(tags).some(tag => tag.value !== '')
+                    //：tagを配列に変換、someで配列内の要素が少なくともvalueプロパティ(内容)が空文字列でない場合にtrueを返す。
                     let hasInput = name !== '' || content !== '' || Array.from(tags).some(tag => tag.value !== '');
 
                     if (hasInput) {
-                        // 確認ダイアログ
+                        //確認ダイアログ
                         let confirmation = confirm('入力した内容は破棄されますがよろしいでしょうか？');
 
                         if (!confirmation) {
-                            // キャンセルした場合はリンク先に移動しない
+                            //キャンセルした場合はリンク先に移動しない
                             event.preventDefault();
                         }
                     }
