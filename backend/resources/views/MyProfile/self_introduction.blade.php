@@ -86,7 +86,7 @@
 
     <footer class="bg-gray-600 text-white p-2 mt-auto">
         <div class="container mx-auto text-center">
-            <p>&copy; 2024 My Website. All rights reserved.</p>
+            <p>&copy; 2024 My Profilesite. オーリス課題用.</p>
         </div>
     </footer>
 

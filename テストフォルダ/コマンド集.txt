@@ -66,6 +66,9 @@ make up
 phpMyAdminに接続
 make migrate
 
+マイグレーションを再実行
+php artisan migrate:refresh
+
 マイグレーション：既存システムやソフトウェア、データなどを別の環境に移転したり、新しい環境に移行することを意味する。
 
 //コンテナのビルド、破棄
