@@ -14,8 +14,11 @@ class MyProfileController extends Controller
      */
     public function index()
     {
+        //全投稿を取得
+        $posts = MyProfile::orderby('post_no', 'desc')->get();
+
         //自己紹介ページ表示(ホーム)
-        return view('MyProfile.index');
+        return view('MyProfile.index', compact('posts'));
     }
 
     public function create(){

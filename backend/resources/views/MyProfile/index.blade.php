@@ -34,13 +34,17 @@
                 shinjiの自己紹介ページへようこそ！
             </h1>
             <p>
-                右のタブから各ページに移れます。何かあれば下記のコメントにてお願いします！
+                右のタブから各ページに移れます。何かあれば下記のコメントに投稿お願いします！
             </p>
             <h2 class="text-xl font-bold text-black mt-10 mb-4">
-                コメントについて
+                コメント投稿について
             </h2 class="relative mt-4">
-            <p>
-                コメントを送る際にタグをつけて送ることができます。タグをつけることにより投稿が検索しやすくなります。
+            <p class="text-base">
+                ・投稿ボタンを押下すると専用の投稿フォームに移り、タグをつけて投稿することができます。<br>
+                ・無事投稿できたら下記のコメント投稿リストに表示されます。<br>
+                ・タグ絞り込みで入力したタグでの検索を行えます。<br>
+                ・コメントは最新10件まで表示され、次の投稿、前の投稿ボタンで次の10件が表示されます。<br>
+                ・全件表示するにはページを更新するか、検索欄を空にして検索ボタンを押下してください。
             </p>
         </div>
 
@@ -85,12 +89,179 @@
         </div>
     </div>
 
-    <div class="flex justify-between items-start p-4 bg-orange-200">
 
-        <a href="{{ route('post_form') }}" class="inline-block px-3 py-1 bg-orange-600 text-white text-lg font-semibold rounded-md hover:bg-orange-800">
-            投稿
-        </a>
+    <div class="flex-col items-center bg-orange-200 ">
+        <div class="flex justify-between items-start p-4 bg-orange-200">
+            <a href="{{ route('post_form') }}" class="inline-block px-3 py-1 bg-orange-600 text-white text-lg font-semibold rounded-md hover:bg-orange-800">
+                    投稿
+            </a>
+                
+                <!-- タグ絞り込み検索欄 -->
+                <div class="flex items-center">
+                    <label for="search-tag" class="mr-2 text-lg font-semibold">タグ絞り込み:</label>
+                    <input type="text" id="search-tag" class="px-3 py-1 border border-gray-300 rounded-md" placeholder="タグを入力">
+                    <button id="search-button" class="ml-2 bg-slate-500 text-white px-3 py-1 rounded-md hover:bg-slate-700">検索</button>
+                    <span id="post-count" class="ml-4 text-lg font-semibold text-gray-700"></span>
+                </div>
+
+                
+        </div>
+        <div class="min-h-screen items-center p-4 bg-orange-200 mx-auto">
+            <!-- 矢印ボタン -->
+            <div class="flex justify-between items-center mx-auto max-w-4xl">
+                    <button id="prev-button" class="bg-blue-500 text-white ml-36 px-4 py-1 rounded-md hover:bg-blue-700" style="display: none;">
+                        ← 前の投稿
+                    </button>
+                    <!-- 右端に寄せる -->
+                    <button id="next-button" class="bg-blue-500 text-white mx-36 ml-auto px-4 py-1 rounded-md hover:bg-blue-700">
+                        次の投稿 →
+                    </button>
+                </div>
+            <!-- 投稿表示エリア -->
+            <!-- 投稿が縦に積み重なるように、中央寄せにする -->
+            <div id="posts-container" class="mt-4 flex flex-col space-y-4 items-center mx-auto max-w-6xl"></div>
+        </div>
     </div>
+    
+        <script>
+            //取得したデータをpostsに保存
+            //JavaScriptで使用するためにJSON 形式に変換
+            const posts = @json($posts);
+
+            let filteredPosts = posts;
+            //1ページに表示する投稿の数を設定
+            const postsPerPage = 10;
+            //現在のページ番号を管理する変数
+            let currentPage = 1;
+
+            // 投稿数を表示するためのメソッド
+            function updatePostCount(count) {
+                document.getElementById('post-count').textContent = `投稿数: ${count}`;
+            }
+
+            //投稿を表示するメソッド
+            function renderPosts() {
+                //投稿表示エリアのHTML要素を取得
+                const postsContainer = document.getElementById('posts-container');
+                //内容をクリア
+                postsContainer.innerHTML = '';
+
+                //現在のページの最初の投稿の要素番号を取得((現在のページ - 1) * 10)
+                const startIndex = (currentPage - 1) * postsPerPage;
+                //現在のページの最後の投稿の要素番号を取得。
+                //((現在のページの最初の投稿の要素番号 + 10)とデータの数を比較して小さいほうを取得)
+                //これにより現在のページ最後の要素番号が最大でも、最初のページ番号*10で打ち止めになる。
+                const endIndex = Math.min(startIndex + postsPerPage, posts.length);
+
+
+                // フィルタリング後の投稿数を更新
+                updatePostCount(filteredPosts.length); 
+
+                //前のページに戻るボタンの表示・非表示を設定
+                //現在のページが1ページ目の時、前へボタンを表示しない
+                //style.displayがnoneかblockで表示が変わる。
+                document.getElementById('prev-button').style.display = currentPage > 1 ? 'block' : 'none';
+                //次のページに戻るボタンの表示・非表示を設定
+                //現在のページの最後の投稿が表示する全体の投稿数より少ないかどうかをチェックして残っていれば表示する
+                document.getElementById('next-button').style.display = endIndex < filteredPosts.length ? 'block' : 'none';
+
+                //現在のページに表示する投稿をループして表示
+                for (let i = startIndex; i < endIndex; i++) {
+                    //検索して絞ったfilteredPostsの中からi番目のpostを取得
+                    const post = filteredPosts[i];
+                    //新しい div 要素を作成して投稿の内容を設定
+                    const postDiv = document.createElement('div');
+                    //classの値。投稿の枠のサイズなどを設定
+                    postDiv.className = 'p-4 w-96 bg-white rounded-md shadow-md';
+                    //post.created_atはそのままだと2024-09-10T21:33:32.000000Zみたいな表記になるので
+                    //日付new DateとtoLocaleStringを用いてyyyy/MM/dd hh:mm:ssの形式にする。
+                    //表示する内容をHTML形式で作成
+
+                    //タグ：Array.from({ length: 10 }で長さ10の配列を作成。(_, i)で各要素の要素番号を取得。
+                    //その中にtag_01～tag_10の値を入れた配列を埋め込む。
+                    //その中で空があった時に除外するためにfilterで除外。
+                    //mapで"#タグ名"の形式に変換
+                    //最後に配列をjoinでスペースで区切りつつ内容を表示
+                    postDiv.innerHTML = `
+                        <div class="text-sm text-gray-600 mb-2">${new Date(post.created_at).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })}</div>
+                        <div class="mb-2">
+                            <div class="text-xs">No.${post.post_no} ${post.name}</div>
+                            <div class="text-sm text-gray-800">${post.post_content}</div>
+                        </div>
+                        <div class="text-xs text-gray-600 mt-2">
+                            ${Array.from({ length: 10 }, (_, i) => post[`tag_${String(i + 1).padStart(2, '0')}`])
+                                .filter(tag => tag)
+                                .map(tag => `#${tag}`)
+                                .join(' ')}
+                        </div>
+                    `;
+                    //div要素をpostsContainerに追加
+                    postsContainer.appendChild(postDiv);
+                }
+
+            }
+
+            //タグ検索を実行する関数
+            document.getElementById('search-button').addEventListener('click', function() {
+                //searchTagに前後の空白が削除され、アルファベットの場合は小文字にした入力値が入る
+                const searchTag = document.getElementById('search-tag').value.trim().toLowerCase();
+
+
+                // 検索欄が空の場合、全投稿を表示し、検索をキャンセル
+                if (!searchTag) {
+                    //空の検索なら、元のすべての投稿(posts)を保持
+                    filteredPosts = posts;
+                    //ページをリセット
+                    currentPage = 1;   
+                    //全投稿を再表示
+                    renderPosts();          
+                    //全投稿数を更新
+                    updatePostCount(filteredPosts.length); 
+                    return;
+                }
+
+                //タグの部分一致で検索
+                //postsから条件に一致する投稿をfilteredPostsに格納
+                filteredPosts = posts.filter(post => {
+                    //tag_01～tag_10内をfor文で確認。
+                    for (let i = 1; i <= 10; i++) {
+                            //タグの値をtag内に取得(post['tag_**'])
+                            const tag = post[`tag_${String(i).padStart(2, '0')}`];
+                            //検索の際に大文字小文字を区別せず、文字列が指定した部分文字列を含んでいるかどうかを確認する。
+                            if (tag && tag.toLowerCase().includes(searchTag)) {
+                                return true;
+                            }
+                        }
+                    return false;    
+                    
+                });
+                
+
+                currentPage = 1;  // ページをリセット
+                renderPosts();     // フィルタリング後の投稿を再表示
+            });
+
+            //「前へ」ボタンがクリックされたときの処理。
+            //現在のページが 1 より大きい場合にページを減らし、renderPosts() を呼び出して表示を更新
+            document.getElementById('prev-button').addEventListener('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderPosts();
+                }
+            });
+            //「次へ」ボタンがクリックされたときの処理。
+            //こちらは現在のページ数 * 10がまだ投稿数より小さい場合に表示を更新
+            document.getElementById('next-button').addEventListener('click', function() {
+                if (currentPage * postsPerPage < posts.length) {
+                    currentPage++;
+                    renderPosts();
+                }
+            });
+
+            //初期の投稿数と投稿表示
+            updatePostCount(posts.length);
+            renderPosts();
+        </script>
     
 
     

@@ -35,10 +35,11 @@ Route::get('/list', [TodoListController::class, 'index']);
 Route::resource('tasks', TaskController::class);
 
 //自己紹介ページ用
-Route::get('MyProfile', [MyProfileController::class, 'index']);
-Route::get('MyProfile', function () {
-    return view('MyProfile.index');
-})->name('index');
+Route::get('MyProfile', [MyProfileController::class, 'index'])->name('index');
+//こちらだとビューしか表示されない(データの取得等ができない)
+// Route::get('MyProfile', function () {
+//     return view('MyProfile.index');
+// })->name('index');
 Route::get('MyProfile/self_introduction', function () {
     return view('MyProfile.self_introduction');
 })->name('self_introduction');
@@ -83,6 +84,7 @@ Route::post('/check-password', function (Request $request) {
 Route::get('/post-manage', function () {
     return view('MyProfile.post_manage');
 })->name('post_manage');
+
 
 
 // Route::get('/', function () {
