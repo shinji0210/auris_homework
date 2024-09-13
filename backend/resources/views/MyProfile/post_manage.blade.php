@@ -31,15 +31,16 @@
         <div class="text-left bg-indigo-100 text-gray-700 text-base">
             <!-- 画面説明 -->
             <p>
-                <span class="font-bold">編集：</span>投稿コメントの編集が行えます。編集したい投稿にチェックを押してから編集ボタンを押せば編集フォームに移行します。<br>
-                <span class="font-bold">削除：</span>投稿コメントの削除が行えます。チェックボックスで複数選択して削除できます。<br>
-                <span class="font-bold">全て選択：</span>現在表示されている投稿リストに全てチェックを付けれます。検索で絞るなどして投稿が非表示になっても、チェック状態は維持されます。<br>
-                <span class="font-bold">全て解除：</span>現在表示されている投稿リストのチェックを全て外します。<br>
-                <span class="font-bold">一括非表示：</span>チェックした投稿を非表示状態にします。実行するとチェックがついていた投稿は<span class="text-red-500">赤文字</span>が入り、ホームに表示されなくなります。<br>
-                <span class="font-bold">非表示の投稿を表示：</span>非表示にした投稿のみ表示します。<br>
-                <span class="font-bold">表示の投稿を表示：</span>ホームに表示されている投稿のみ表示します。<br>
-                <span class="font-bold">タグ絞り込み：</span>タグ絞り込みで入力したタグでの検索を行えます。<br>
-                <span class="font-bold">ホームに戻る</span>ホーム画面に戻ります。<br>
+                <span class="font-bold">・編集：</span>投稿コメントの編集が行えます。編集したい投稿にチェックを押してから編集ボタンを押せば編集フォームに移行します。<br>
+                <span class="font-bold">・削除：</span>投稿コメントの削除が行えます。チェックボックスで複数選択して削除できます。<br>
+                <span class="font-bold">・全て選択：</span>現在表示されている投稿リストに全てチェックを付けれます。検索で絞るなどして投稿が非表示になっても、チェック状態は維持されます。<br>
+                <span class="font-bold">・全て解除：</span>現在表示されている投稿リストのチェックを全て外します。<br>
+                <span class="font-bold">・一括非表示：</span>チェックした投稿を非表示状態にします。実行するとチェックがついていた投稿は<span class="text-red-500">赤文字</span>が入り、ホームに表示されなくなります。<br>
+                <span class="font-bold">・非表示の投稿を表示：</span>非表示にした投稿のみ表示します。<br>
+                <span class="font-bold">・表示の投稿を表示：</span>ホームに表示されている投稿のみ表示します。<br>
+                <span class="font-bold">・タグ絞り込み：</span>タグ絞り込みで入力したタグでの検索を行えます。<br>
+                全件表示するにはページを更新するか、検索欄を空にして検索ボタンを押下してください。<br>
+                <span class="font-bold">・ホームに戻る</span>ホーム画面に戻ります。<br>
             </p>
 
         </div>
