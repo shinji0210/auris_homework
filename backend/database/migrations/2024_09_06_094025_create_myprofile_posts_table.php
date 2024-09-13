@@ -33,7 +33,6 @@ return new class extends Migration
             $table->string('tag_10',10)->nullable();
             //デフォルトでfalse。削除した際はtrueに変更し、画面に表示させない。
             $table->boolean('status')->default(false);
-
             // 他のカラム
             //投稿日時、更新日時　編集された時、削除状況が変わった時に更新
             $table->timestamps();

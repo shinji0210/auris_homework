@@ -59,6 +59,17 @@ Route::get('MyProfile/post_form', function () {
 // 投稿データを保存するルート
 Route::post('post', [MyProfileController::class, 'store']);
 
+Route::post('post_update', [MyProfileController::class, 'post_update']);
+
+//表示、非表示処理で扱うルート
+Route::post('/update', [MyProfileController::class, 'update'])->name('update');
+
+//削除処理で扱うルート
+Route::post('/delete', [MyProfileController::class, 'delete'])->name('delete');
+
+//編集処理で扱うルート
+Route::get('/post_form_edit', [MyProfileController::class, 'edit'])->name('post_form_edit');
+
 //index.blade.phpからcheck_password ルートに送信されたパスワードを受け取る
 //correctPasswordの値と一致するか検証。
 //Route::post～：POSTリクエストに応答するルートを設定
@@ -81,9 +92,8 @@ Route::post('/check-password', function (Request $request) {
     //
 })->name('check_password');
 
-Route::get('/post-manage', function () {
-    return view('MyProfile.post_manage');
-})->name('post_manage');
+//管理画面へのルート
+Route::get('/post_manage', [MyProfileController::class, 'post_manage'])->name('post_manage');
 
 
 
