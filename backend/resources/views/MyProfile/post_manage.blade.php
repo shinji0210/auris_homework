@@ -439,7 +439,7 @@
                 .map(post => post.post_no);
 
                 if (postNos.length === 0) {
-                    alert('チェックされた投稿がありません。');
+                    alert('削除する投稿をチェックしてください。');
                 return;
                 }
 
