@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>自己紹介ページ</title>
  
     <!-- ヘッダーフォント用 -->
@@ -45,6 +46,13 @@
 
         </div>
 
+        <!-- 編集画面で更新処理してきた場合にメッセージ表示 -->
+        @if (session('message'))
+            <script>
+                    // セッションメッセージをアラートで表示
+                    alert('{{ session('message') }}');
+            </script>
+        @endif
 
         <div class="mt-4 items-center mx-auto max-w-4xl">
 
@@ -141,13 +149,13 @@
             //コメントリスト非表示、表示の表示切替
             //post.statusがtrueだと非表示のみ表示
             document.getElementById('filter-true').addEventListener('click', function() {
-                filteredPosts = posts.filter(post => post.status === 1);
+                filteredPosts = posts.filter(post => post.post_status === '1');
                 currentPage = 1; // ページをリセット
                 renderPosts(); // 再描画
             });
 
             document.getElementById('filter-false').addEventListener('click', function() {
-                filteredPosts = posts.filter(post => post.status === 0);
+                filteredPosts = posts.filter(post => post.post_status === '0');
                 currentPage = 1; // ページをリセット
                 renderPosts(); // 再描画
             });
@@ -193,10 +201,24 @@
                     //flexとjustify-between、items-centerを追加することで、投稿内容とチェックボックスが左右中央に配置される。
                     postDiv.className = 'p-4 w-96 bg-white rounded-md shadow-md flex justify-between items-center';
                     
+                    //表示する投稿がない場合は処理を抜ける
+                    if (!post) {
+                        console.log('表示件数0件');
+                        return;
+                    }
+
+                    //変更 2024/10/8 タグは可変式で登録
+                    //タグの表示内容を作成。タグを#付きで表示し、join(' ')` でスペース区切りにする
+                    //mapで"#タグ名"の形式に変換
+                    //post.tags：MyProfile::with('tags') によって posts に紐付いたmyprofile_posts_tagsのタグ内容
+                    //再表示の際、対象が存在しなければ空の配列として設定する。
+                    const tags = (post.tags || []).map(tag => `#${tag.tag_content}`).join(' ');
+
+
                     // 投稿内容の色を status に応じて変更、postContentClassに代入
                     //非表示の場合、No、名前、内容が赤色になる
                     let postContentClass = 'text-gray-800';
-                    if(post.status === 1){
+                    if(post.post_status === '1'){
                         postContentClass = 'text-red-600';
                     }
                     
@@ -204,9 +226,6 @@
                     //日付new DateとtoLocaleStringを用いてyyyy/MM/dd hh:mm:ssの形式にする。
                     //表示する内容をHTML形式で作成
 
-                    //タグ：Array.from({ length: 10 }で長さ10の配列を作成。(_, i)で各要素の要素番号を取得。
-                    //その中にtag_01～tag_10の値を入れた配列を埋め込む。
-                    //その中で空があった時に除外するためにfilterで除外。
                     //mapで"#タグ名"の形式に変換
                     //最後に配列をjoinでスペースで区切りつつ内容を表示
                     //チェックボックス追加
@@ -218,10 +237,7 @@
                                 <div class="text-sm ${postContentClass}">${post.post_content}</div>
                             </div>
                             <div class="text-xs text-gray-600 mt-2">
-                                ${Array.from({ length: 10 }, (_, i) => post[`tag_${String(i + 1).padStart(2, '0')}`])
-                                    .filter(tag => tag)
-                                    .map(tag => `#${tag}`)
-                                    .join(' ')}
+                                ${tags}
                             </div>
                         </div>
                         <div class="ml-4">
@@ -291,16 +307,16 @@
                 //タグの部分一致で検索
                 //postsから条件に一致する投稿をfilteredPostsに格納
                 filteredPosts = posts.filter(post => {
-                    //tag_01～tag_10内をfor文で確認。
-                    for (let i = 1; i <= 10; i++) {
-                            //タグの値をtag内に取得(post['tag_**'])
-                            const tag = post[`tag_${String(i).padStart(2, '0')}`];
-                            //検索の際に大文字小文字を区別せず、文字列が指定した部分文字列を含んでいるかどうかを確認する。
-                            if (tag && tag.toLowerCase().includes(searchTag)) {
-                                return true;
-                            }
-                        }
-                    return false;    
+                    //post.tagsから検索対象のタグリストを取得
+                    if (post.tags && post.tags.length > 0) {
+                        //some() メソッドを使ってタグのリストをループ処理
+                        return post.tags.some(tag => {
+                            //タグの内容（tag_content）を小文字に変換し、
+                            //searchTag がそのタグの内容に部分一致するかどうかを確認(trueかfalseで返す)
+                            return tag.tag_content.toLowerCase().includes(searchTag);
+                        });
+                    }
+                    return false;
                     
                 });
                 
@@ -479,6 +495,7 @@
         <!-- 編集ボタンが押されたときに実行 -->
         <script>
             document.getElementById('post_edit').addEventListener('click', function() {
+                //チェックされた投稿を取得
                 const checkedPosts = filteredPosts
                 .filter(post => checkedState[post.post_no]);
 
@@ -497,24 +514,52 @@
                 //1つの投稿が選択されているので0番目のチェックリストを取得
                 const postToEdit = checkedPosts[0];
 
-                //リンク先へのルートを指定。
-                //?をつけるとそれ以降の文字列は1つの投稿の要素をリンク先のURLに追加
-                //encodeURIComponent() ：URLエンコードを行うJavaScriptの関数。URLに含められない特殊文字を送信するために使用。
-                let editUrl = `{{ route('post_form_edit') }}?post_no=${postToEdit.post_no}
-                &name=${encodeURIComponent(postToEdit.name)}
-                &content=${encodeURIComponent(postToEdit.post_content)}`;
+                // 変更 2024/10/8 タグは可変式で登録
 
-                // タグもURLに含める
-                for (let k = 1; k <= 10; k++) {
-                    //例えばkが1の場合、postToEdit.tag_01を参照
-                    //string.padStart(桁数, '左詰めする文字')
-                    let send_tag = postToEdit[`tag_${String(k).padStart(2, '0')}`] || '';
-                    //editurlに追加
-                    editUrl += `&tag_${String(k).padStart(2, '0')}=${encodeURIComponent(send_tag)}`;
-                }
+                // フォームを作成
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '{{ route("post_form_edit") }}';
 
-                //編集ページに移行
-                window.location.href = editUrl;
+                // CSRFトークンをフォームに追加 (LaravelではCSRF保護があるため)
+                const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                const tokenInput = document.createElement('input');
+                tokenInput.type = 'hidden';
+                tokenInput.name = '_token';
+                tokenInput.value = token;
+                form.appendChild(tokenInput);
+
+                // 投稿データをフォームに追加
+                const postNoInput = document.createElement('input');
+                postNoInput.type = 'hidden';
+                postNoInput.name = 'post_no';
+                postNoInput.value = postToEdit.post_no;
+                form.appendChild(postNoInput);
+
+                const nameInput = document.createElement('input');
+                nameInput.type = 'hidden';
+                nameInput.name = 'name';
+                nameInput.value = postToEdit.name;
+                form.appendChild(nameInput);
+
+                const contentInput = document.createElement('input');
+                contentInput.type = 'hidden';
+                contentInput.name = 'content';
+                contentInput.value = postToEdit.post_content;
+                form.appendChild(contentInput);
+
+                // タグもフォームに追加 (無制限対応)
+                postToEdit.tags.forEach((tag, index) => {
+                    const tagInput = document.createElement('input');
+                    tagInput.type = 'hidden';
+                    tagInput.name = `tags[${index}]`;
+                    tagInput.value = typeof tag === 'object' ? tag.tag_content : tag;  // タグがオブジェクトの場合に対応
+                    form.appendChild(tagInput);
+                });
+
+                // フォームをドキュメントに追加して送信
+                document.body.appendChild(form);
+                form.submit();
             });
         </script>
 
