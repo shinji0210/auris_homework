@@ -65,7 +65,11 @@ class MyProfileController extends Controller
     {
         //全投稿を取得
         //status=false、post_noを降順にして取得。
+
+        //変更 2024/10/17 削除は論理削除に変更
+        //post_statusが9の投稿は表示しない。
         $posts = MyProfile::where('status', false)
+        ->where('post_status', '!=', 9)
         ->orderby('post_no', 'desc')
         //変更 2024/10/8 タグは可変式で登録
         //with句を用いてタグ内容を結び付けて取得するようにする
@@ -275,8 +279,14 @@ class MyProfileController extends Controller
         $postNos = $request->input('postNos');
 
         //whereInで絞ったデータを削除
+        //
+        // MyProfile::whereIn('post_no', $postNos)
+        // ->delete();
+
+        //変更 2024/10/17 削除は論理削除に変更
+        //post_statusは9に設定。
         MyProfile::whereIn('post_no', $postNos)
-        ->delete();
+        ->update(['post_status' => "9"]);
 
         //元の画面にtrueのレスポンスを送る。
         return response()->json(['success' => true]);
