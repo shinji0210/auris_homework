@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('post_content', 200);
             //投稿についてくるタグ数
             $table->integer('post_tags_count');
-            //投稿ステータス(削除状態：-1、表示状態：0、非表示状態：1)
+            //投稿ステータス(削除状態：9、表示状態：0、非表示状態：1)
             $table->string('post_status', 1);
             //デフォルトでfalse。削除した際はtrueに変更し、画面に表示させない。
             $table->boolean('status')->default(false);
