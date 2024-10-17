@@ -68,7 +68,8 @@ Route::post('/update', [MyProfileController::class, 'update'])->name('update');
 Route::post('/delete', [MyProfileController::class, 'delete'])->name('delete');
 
 //編集処理で扱うルート
-Route::get('/post_form_edit', [MyProfileController::class, 'edit'])->name('post_form_edit');
+Route::post('/post_form_edit', [MyProfileController::class, 'edit'])->name('post_form_edit');
+
 
 //index.blade.phpからcheck_password ルートに送信されたパスワードを受け取る
 //correctPasswordの値と一致するか検証。
