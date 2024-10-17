@@ -48,6 +48,14 @@
             </p>
         </div>
 
+        @if (session('message'))
+                <script>
+                    // post_formからの投稿完了のセッションメッセージをアラートで表示
+                    alert('{{ session('message') }}');
+                    
+                </script>
+        @endif
+
         <div class="flex flex-col space-y-0">
 
             <!-- 自己紹介へ向かう用のボタン -->
@@ -173,14 +181,18 @@
                     const postDiv = document.createElement('div');
                     //classの値。投稿の枠のサイズなどを設定
                     postDiv.className = 'p-4 w-96 bg-white rounded-md shadow-md';
+                    
+
+                    //変更 2024/10/8 タグは可変式で登録
+                    //タグの表示内容を作成。タグを#付きで表示し、join(' ')` でスペース区切りにする
+                    //mapで"#タグ名"の形式に変換
+                    //post.tags：MyProfile::with('tags') によって posts に紐付いたmyprofile_posts_tagsのタグ内容
+                    const tags = post.tags.map(tag => `#${tag.tag_content}`).join(' ');
+
                     //post.created_atはそのままだと2024-09-10T21:33:32.000000Zみたいな表記になるので
                     //日付new DateとtoLocaleStringを用いてyyyy/MM/dd hh:mm:ssの形式にする。
                     //表示する内容をHTML形式で作成
 
-                    //タグ：Array.from({ length: 10 }で長さ10の配列を作成。(_, i)で各要素の要素番号を取得。
-                    //その中にtag_01～tag_10の値を入れた配列を埋め込む。
-                    //その中で空があった時に除外するためにfilterで除外。
-                    //mapで"#タグ名"の形式に変換
                     //最後に配列をjoinでスペースで区切りつつ内容を表示
                     postDiv.innerHTML = `
                         <div class="text-sm text-gray-600 mb-2">${new Date(post.created_at).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })}</div>
@@ -189,10 +201,7 @@
                             <div class="text-sm text-gray-800">${post.post_content}</div>
                         </div>
                         <div class="text-xs text-gray-600 mt-2">
-                            ${Array.from({ length: 10 }, (_, i) => post[`tag_${String(i + 1).padStart(2, '0')}`])
-                                .filter(tag => tag)
-                                .map(tag => `#${tag}`)
-                                .join(' ')}
+                            ${tags}
                         </div>
                     `;
                     //div要素をpostsContainerに追加
@@ -223,16 +232,17 @@
                 //タグの部分一致で検索
                 //postsから条件に一致する投稿をfilteredPostsに格納
                 filteredPosts = posts.filter(post => {
-                    //tag_01～tag_10内をfor文で確認。
-                    for (let i = 1; i <= 10; i++) {
-                            //タグの値をtag内に取得(post['tag_**'])
-                            const tag = post[`tag_${String(i).padStart(2, '0')}`];
-                            //検索の際に大文字小文字を区別せず、文字列が指定した部分文字列を含んでいるかどうかを確認する。
-                            if (tag && tag.toLowerCase().includes(searchTag)) {
-                                return true;
-                            }
-                        }
-                    return false;    
+                    //変更 2024/10/8 タグは可変式で登録
+                    //post.tagsから検索対象のタグリストを取得
+                    if (post.tags && post.tags.length > 0) {
+                        //some() メソッドを使ってタグのリストをループ処理
+                        return post.tags.some(tag => {
+                            //タグの内容（tag_content）を小文字に変換し、
+                            //searchTag がそのタグの内容に部分一致するかどうかを確認(trueかfalseで返す)
+                            return tag.tag_content.toLowerCase().includes(searchTag);
+                        });
+                    }
+                    return false;
                     
                 });
                 
@@ -249,6 +259,7 @@
                     renderPosts();
                 }
             });
+            
             //「次へ」ボタンがクリックされたときの処理。
             //こちらは現在のページ数 * 10がまだ投稿数より小さい場合に表示を更新
             document.getElementById('next-button').addEventListener('click', function() {
