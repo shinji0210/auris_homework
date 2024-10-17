@@ -269,6 +269,7 @@ class MyProfileController extends Controller
         return response()->json(['success' => true]);
     }
 
+    
     //削除処理
     public function delete(Request $request){
         $postNos = $request->input('postNos');
