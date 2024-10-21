@@ -13,6 +13,24 @@ class MyProfile extends Model
 
     protected $table = 'myprofile_posts'; // 正しいテーブル名
 
+    protected $fillable = [
+        // 投稿No
+        'post_no',       
+        // 名前
+        'name',          
+        // 投稿内容
+        'post_content',  
+        // タグ数
+        'post_tags_count',
+        // 投稿ステータス
+        'post_status',   
+        'status',        
+        // 作成日時
+        'created_at',    
+        // 更新日時
+        'updated_at',    
+    ];
+
     public function tags()
     {
         //hasmanyで一つのmyprofile_postsに対して複数myprofile_posts_tagsを持つリレーションを作成
