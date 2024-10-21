@@ -23,5 +23,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             TodoListSeeder::class
           ]);
+
+        // MyProfileSeederを呼び出す
+        //10/18 追加 MyProfileのfactoryとseeder作成
+        $this->call(MyProfileSeeder::class);
     }
 }
