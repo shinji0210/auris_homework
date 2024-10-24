@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 
 //↓追記しておく
@@ -8,6 +9,9 @@ use App\Http\Controllers\TaskController;
 
 //自己紹介ページ用
 use App\Http\Controllers\MyProfileController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminProfileController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
 
 
@@ -22,6 +26,9 @@ use Illuminate\Http\Request;
 |
 */
 
+
+
+
 //ルーティングは以下のような形式で記述。
 //Route::get( アドレス , [コントローラーの名前::class , メソッド名] );
 
@@ -34,7 +41,11 @@ Route::get('/list', [TodoListController::class, 'index']);
 //TaskController.php内の各メソッドが使用できる
 Route::resource('tasks', TaskController::class);
 
+
+
 //自己紹介ページ用
+//修正 2024/10/21 管理者とゲストのURLを分ける
+//管理画面関連のルートはコメントアウト
 Route::get('MyProfile', [MyProfileController::class, 'index'])->name('index');
 //こちらだとビューしか表示されない(データの取得等ができない)
 // Route::get('MyProfile', function () {
@@ -59,16 +70,16 @@ Route::get('MyProfile/post_form', function () {
 // 投稿データを保存するルート
 Route::post('post', [MyProfileController::class, 'store']);
 
-Route::post('post_update', [MyProfileController::class, 'post_update']);
+// Route::post('post_update', [MyProfileController::class, 'post_update']);
 
 //表示、非表示処理で扱うルート
-Route::post('/update', [MyProfileController::class, 'update'])->name('update');
+// Route::post('/update', [MyProfileController::class, 'update'])->name('update');
 
 //削除処理で扱うルート
-Route::post('/delete', [MyProfileController::class, 'delete'])->name('delete');
+// Route::post('/delete', [MyProfileController::class, 'delete'])->name('delete');
 
 //編集処理で扱うルート
-Route::post('/post_form_edit', [MyProfileController::class, 'edit'])->name('post_form_edit');
+// Route::post('/post_form_edit', [MyProfileController::class, 'edit'])->name('post_form_edit');
 
 
 //index.blade.phpからcheck_password ルートに送信されたパスワードを受け取る
@@ -82,7 +93,6 @@ Route::post('/check-password', function (Request $request) {
     if ($request->password === $correctPassword) {
         // 認証成功: セッションにフラグを設定
         //ページ遷移を試みるたびにパスワードの入力を求める
-        //必要なルート：middleware、get'/login' get '/logout'
         session(['authenticated' => true]);
         //認証が成功した場合、post_manageに移行
         return redirect()->route('post_manage');
@@ -94,10 +104,104 @@ Route::post('/check-password', function (Request $request) {
 })->name('check_password');
 
 //管理画面へのルート
-Route::get('/post_manage', [MyProfileController::class, 'post_manage'])->name('post_manage');
+// Route::get('/post_manage', [MyProfileController::class, 'post_manage'])->name('post_manage');
 
 
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
+
+
+
+//追加 2024/10/21 管理者とゲストのURLを分ける
+//ログイン処理の追加
+//breezeのインストール
+//breezeとはユーザー認証システムのパッケージ。
+//ログイン、登録、パスワードのリセット、電子メールの確認、パスワードの確認の機能が備わっている。
+//設定はBlade with Alpine、No dark mode、PHPUnit
+//他、AuthControllerAdminProfileController、userモデルシードの追加
+//Authenticateに未認証のユーザーがアクセスした際に login ページにリダイレクトされるタイミングで、
+//セッションにアラート用メッセージを設定
+
+
+// ログインページ
+Route::get('MyProfile/login', function () {
+    return view('MyProfile.login');
+})->name('login');
+
+// ログイン処理
+Route::post('MyProfile/login', [AuthController::class, 'login'])->name('login');
+
+//管理者用のルート追加
+//AdminProfileControllerにメソッドをコピー
+
+// 管理者用のルート
+Route::middleware('auth')->prefix('admin')->group(function(){
+
+    Route::get('MyProfile', [AdminProfileController::class, 'index'])->name('admin.index');
+    Route::get('MyProfile/self_introduction', function () {
+        return view('admin.self_introduction');
+    })->name('admin.self_introduction');
+
+    Route::get('MyProfile/career', function () {
+        return view('admin.career');
+    })->name('admin.career');
+
+    Route::get('MyProfile/want_to_do', function () {
+        return view('admin.want_to_do');
+    })->name('admin.want_to_do');
+    Route::get('MyProfile/skill', function () {
+        return view('admin.skill');
+    })->name('admin.skill');
+    Route::get('MyProfile/post_form', function () {
+        return view('admin.post_form');
+    })->name('admin.post_form');
+
+    // 投稿データを保存するルート
+    Route::post('post', [AdminProfileController::class, 'store'])->name('admin.post');
+
+    //ゲストでも表示を制限するルート
+    Route::post('post_update', [AdminProfileController::class, 'post_update'])->name('admin.post_update');
+
+    //表示、非表示処理で扱うルート
+    Route::post('/update', [AdminProfileController::class, 'update'])->name('admin.update');
+
+    //削除処理で扱うルート
+    Route::post('/delete', [AdminProfileController::class, 'delete'])->name('admin.delete');
+
+    //編集処理で扱うルート
+    Route::post('/post_form_edit', [AdminProfileController::class, 'edit'])->name('admin.post_form_edit');
+    
+    
+
+
+    //index.blade.phpからcheck_password ルートに送信されたパスワードを受け取る
+    //correctPasswordの値と一致するか検証。
+    //Route::post～：POSTリクエストに応答するルートを設定
+    //name('check_password')：このルートに名前を付与
+    Route::post('/check-password', function (Request $request) {
+        //正しいパスワードを設定
+        $correctPassword = 'shinji0120';
+
+        if ($request->password === $correctPassword) {
+            // 認証成功: セッションにフラグを設定
+            //ページ遷移を試みるたびにパスワードの入力を求める
+            //必要なルート：middleware、get'/login' get '/logout'
+            session(['authenticated' => true]);
+            //認証が成功した場合、post_manageに移行
+            return redirect()->route('admin.post_manage');
+        } else {
+            // エラーメッセージをセッションに保存してリダイレクト
+            return redirect()->back()->with('error', 'パスワードが違います。');
+        }
+        //
+    })->name('admin.check_password');
+
+    //管理画面へのルート
+    Route::get('/post_manage', [AdminProfileController::class, 'post_manage'])->name('admin.post_manage');
+
+    // ログアウトルート
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});

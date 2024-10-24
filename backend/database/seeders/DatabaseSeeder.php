@@ -27,5 +27,9 @@ class DatabaseSeeder extends Seeder
         // MyProfileSeederを呼び出す
         //10/18 追加 MyProfileのfactoryとseeder作成
         $this->call(MyProfileSeeder::class);
+
+        //追加 2024/10/21 管理者とゲストのURLを分ける
+        //userのseederを呼び出す。
+        $this->call(UserSeeder::class);
     }
 }
