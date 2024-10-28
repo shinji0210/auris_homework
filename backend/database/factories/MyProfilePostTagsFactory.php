@@ -36,8 +36,9 @@ class MyProfilePostTagsFactory extends Factory
             'tag_content' => $this->generateTagContent(),
             // デフォルトでfalse
             'status' => false, 
-            'created_at' => now(),
-            'updated_at' => now(),
+            //created_at、updated_atは不要
+            // 'created_at' => now(),
+            // 'updated_at' => now(),
         ];
     }
 

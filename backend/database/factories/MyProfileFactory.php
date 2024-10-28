@@ -56,8 +56,9 @@ class MyProfileFactory extends Factory
             // 'post_status' => $this->faker->randomElement(['0', '1', '9']), 
             //デフォルトでfalse
             'status' => false, 
-            'created_at' => now(),
-            'updated_at' => now(),
+            //created_at、updated_atは不要
+            // 'created_at' => now(),
+            // 'updated_at' => now(),
         ];
     }
 
