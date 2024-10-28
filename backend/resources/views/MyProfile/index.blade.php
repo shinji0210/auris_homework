@@ -44,15 +44,22 @@
                 ・無事投稿できたら下記のコメント投稿リストに表示されます。<br>
                 ・タグ絞り込みで入力したタグでの検索を行えます。<br>
                 ・コメントは最新10件まで表示され、次の投稿、前の投稿ボタンで次の10件が表示されます。<br>
-                ・全件表示するにはページを更新するか、検索欄を空にして検索ボタンを押下してください。
+                ・全件表示するにはページを更新するか、検索欄を空にして検索ボタンを押下してください。<br>
             </p>
+
+            <!-- 追加 2024/10/21 管理者とゲストのURLを分ける -->
+            <!-- ログインページに戻るボタン追加 -->
+            <div class="mt-2 items-center mx-auto max-w-4xl">
+                <a href="{{ route('login') }}" class="ml-0 inline-block px-2 py-1 bg-gray-500 text-white text-lg font-semibold rounded-md hover:bg-gray-700">
+                    ログイン画面に戻る
+                </a>
+            </div>
         </div>
 
         @if (session('message'))
                 <script>
                     // post_formからの投稿完了のセッションメッセージをアラートで表示
-                    alert('{{ session('message') }}');
-                    
+                    alert('{{ session('message') }}');     
                 </script>
         @endif
 
@@ -88,11 +95,14 @@
 
             <!-- 投稿管理画面へ向かう用のボタン -->
             <!-- クリックするとパスワード入力ポップアップを開くopenPasswordModalを実行 -->
-            <button onclick="openPasswordModal()" class="relative mt-0 ml-auto block w-20 h-8 text-black flex items-center text-xl font-semibold bg-slate-300
+            
+            <!-- 修正 2024/10/21 管理者とゲストのURLを分ける -->
+            <!-- ゲストの画面は管理ボタンは表示させない。 -->
+            <!-- <button onclick="openPasswordModal()" class="relative mt-0 ml-auto block w-20 h-8 text-black flex items-center text-xl font-semibold bg-slate-300
                 border-2 border-black transition-all duration-300 
                 hover:bg-slate-400 hover:border-black">
                 管理
-            </button>
+            </button> -->
 
         </div>
     </div>
