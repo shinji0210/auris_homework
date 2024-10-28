@@ -69,7 +69,8 @@ class MyProfileController extends Controller
         //変更 2024/10/17 削除は論理削除に変更
         //post_statusが9の投稿は表示しない。
         $posts = MyProfile::where('status', false)
-        ->where('post_status', '!=', 9)
+        //修正 10/28 laravelの論理削除機能を使用。post_statusの条件を外す。
+        // ->where('post_status', '!=', 9)
         ->orderby('post_no', 'desc')
         //変更 2024/10/8 タグは可変式で登録
         //with句を用いてタグ内容を結び付けて取得するようにする
@@ -277,15 +278,17 @@ class MyProfileController extends Controller
     public function delete(Request $request){
         $postNos = $request->input('postNos');
 
+        //修正 10/28 laravelの論理削除機能を使用
+        //再びコメントアウト
         //whereInで絞ったデータを削除
-        //
-        // MyProfile::whereIn('post_no', $postNos)
-        // ->delete();
+        
+        MyProfile::whereIn('post_no', $postNos)
+        ->delete();
 
         //変更 2024/10/17 削除は論理削除に変更
         //post_statusは9に設定。
-        MyProfile::whereIn('post_no', $postNos)
-        ->update(['post_status' => "9"]);
+        // MyProfile::whereIn('post_no', $postNos)
+        // ->update(['post_status' => "9"]);
 
         //元の画面にtrueのレスポンスを送る。
         return response()->json(['success' => true]);

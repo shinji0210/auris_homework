@@ -23,6 +23,9 @@ return new class extends Migration
             $table->integer('post_tags_count');
             //投稿ステータス(削除状態：9、表示状態：0、非表示状態：1)
             $table->string('post_status', 1);
+            //修正 10/28 laravelの論理削除機能を使用
+            //論理削除用のdeleted_atカラムを追加
+            $table->softDeletes(); 
             //デフォルトでfalse。削除した際はtrueに変更し、画面に表示させない。
             $table->boolean('status')->default(false);
             // 他のカラム

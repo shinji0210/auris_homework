@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 //変更 2024/10/8 タグは可変式で登録
 use App\Models\MyProfilePostTags;
+//修正 10/28 laravelの論理削除機能を使用。
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MyProfile extends Model
 {
-    use HasFactory;
+    //SoftDeletesを追加。
+    use HasFactory, SoftDeletes;
 
     protected $table = 'myprofile_posts'; // 正しいテーブル名
 
