@@ -19,18 +19,13 @@ return new class extends Migration
             $table->string('name', 40);
             //投稿内容(200文字以内)
             $table->string('post_content', 200);
-            //タグ1～10
-            //nullを許容
-            $table->string('tag_01',10)->nullable();
-            $table->string('tag_02',10)->nullable();
-            $table->string('tag_03',10)->nullable();
-            $table->string('tag_04',10)->nullable();
-            $table->string('tag_05',10)->nullable();
-            $table->string('tag_06',10)->nullable();
-            $table->string('tag_07',10)->nullable();
-            $table->string('tag_08',10)->nullable();
-            $table->string('tag_09',10)->nullable();
-            $table->string('tag_10',10)->nullable();
+            //投稿についてくるタグ数
+            $table->integer('post_tags_count');
+            //投稿ステータス(削除状態：9、表示状態：0、非表示状態：1)
+            $table->string('post_status', 1);
+            //修正 10/28 laravelの論理削除機能を使用
+            //論理削除用のdeleted_atカラムを追加
+            $table->softDeletes(); 
             //デフォルトでfalse。削除した際はtrueに変更し、画面に表示させない。
             $table->boolean('status')->default(false);
             // 他のカラム
